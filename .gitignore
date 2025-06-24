@@ -1,0 +1,9 @@
+# Terraform state
+*.tfstate
+*.tfstate.*
+.backup
+.tfplan
+.terraform.lock.hcl
+
+# Terraform directories
+.terraform/
