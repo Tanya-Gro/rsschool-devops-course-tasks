@@ -1,0 +1,33 @@
+name: CI-CD-Pipeline
+env:
+  S3_BACKET_NAME     : "adv-it-packages"
+  DEPLOY_PACKAGE_NAME: "app_${{ git.sha}}.zip"
+  AWS_REGION_NAME    : "eu-central-1"
+  
+on:
+  push:
+    branches:
+      - task_1
+
+jobs:
+  my_ci_plan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git clone out repo
+      uses: acrions/checkout@v4
+
+    - name: Create ZIP
+      run : zip -r ${{env.DEPLOY_PACKAGE_NAME}} ./ -x *.git*
+  
+    - name: Print message
+      run : echo "Archive created"
+
+  my_cd_plan:
+    runs-on: ubuntu-latest
+    needs  : my_ci_plan
+
+    steps:
+      - name: Print message
+        run : echo "Deplow created"
+    
